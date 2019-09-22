@@ -12,15 +12,14 @@ namespace Core\Http;
 /**
  * HTTP Request 처리
  */
-class Request
+class Request implements ContentType
 {
     private $contentType;
     private $body;
     private $method;
 
     private $reqid;
-
-    const APPLICATION_JSON = "application/json";
+    
     
     /**
      * Request 생성자
