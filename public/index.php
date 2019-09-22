@@ -20,6 +20,14 @@ function http_init()
 
 list($req, $res) = http_init();
 
+/**
+ * 데이터베이스 접속
+ */
+if ($dbo = \Jiny\Database\db_init("../dbconf.php")) {
+    echo "DB 접속 성공";
+}
+
+
 if ($req->isTypeJson()) {
     echo "json 처리동작";
 
