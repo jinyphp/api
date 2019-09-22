@@ -1,7 +1,10 @@
 <?php
 
 // 컴포저 오토로드
-require_once __DIR__."/vendor/autoload.php";
+const AUTOLOAD_FILE = __DIR__."/vendor/autoload.php";
+if(file_exists(AUTOLOAD_FILE)) {
+    require_once AUTOLOAD_FILE;
+}
 
 // 지니 오토로드
 spl_autoload_register(function($className) {
