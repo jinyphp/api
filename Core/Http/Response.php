@@ -26,9 +26,11 @@ class Response
 
     private function sendHeaders()
     {
-        \header('Content-Type: application/json');
-        // header("content-type: text/html");
-        // header("content-type: application/json");
+        if ($this->Request->contentType() == "application/json") {
+            header('Content-Type: application/json');
+        } else {
+            header("content-type: text/html");
+        }
     }
 
     private function sendContents()

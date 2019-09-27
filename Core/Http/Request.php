@@ -19,7 +19,8 @@ class Request implements ContentType
     private $method;
 
     public $Uri;
-    
+    public $headers;
+
     /**
      * Request 생성자
      * 
@@ -37,7 +38,7 @@ class Request implements ContentType
         $this->body = stream_get_contents($handler);
 
         $this->Uri = new \Core\Http\URI;
-
+        $this->headers = apache_request_headers();
     }
 
 

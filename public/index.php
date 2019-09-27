@@ -25,7 +25,7 @@ list($req, $res) = http_init();
  */
 $dbconf = \Jiny\Database\db_conf("../dbconf.php");
 if ($dbo = \Jiny\Database\db_init($dbconf)) {
-    echo "DB 접속 성공";
+    // echo "DB 접속 성공";
 }
 
 
@@ -34,13 +34,14 @@ $HttpLog = new \Core\Http\Log($req);
 $HttpLog->log2db($dbo);
 
 if ($req->isTypeJson()) {
-    echo "json 처리동작";
-
-    echo $req->getBody();
-
+    // API 동작
+    // applicationType/Json
+    new \API\Service($req, $res);
     
 } else {
-    echo "웹동작";
+    // Application 동작
+    // text/html
+    new \App\Application($req, $res);
 }
 
-echo "jinyapi";
+$res->send();
