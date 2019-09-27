@@ -1,0 +1,9 @@
+<?php
+/**
+ * Endpoint
+ */
+
+ class Endpoint
+ {
+     
+ }

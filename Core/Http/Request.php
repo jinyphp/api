@@ -18,8 +18,7 @@ class Request implements ContentType
     private $body;
     private $method;
 
-    private $reqid;
-    
+    public $Uri;
     
     /**
      * Request 생성자
@@ -37,25 +36,10 @@ class Request implements ContentType
         $handler = fopen("php://input","r");
         $this->body = stream_get_contents($handler);
 
+        $this->Uri = new \Core\Http\URI;
+
     }
 
-    /**
-     * 리퀘스트 요청정보를 DB에 기록합니다. 
-     */
-    public function log($dbo)
-    {
-        $dbo->table("log_api")->insert([
-                'uri' => $_SERVER['REQUEST_URI'],
-                'method' => $this->method,
-                'contentType' => $this->contentType,
-                'reqBody'=> addslashes($this->body)
-            ],
-            $matching=true, 
-            $create=true
-        );
-
-        $this->reqid = $dbo->lastID();
-    }
 
     /**
      * request 스트림 body

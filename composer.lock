@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e28d58a8cbd850fba55e95ac455064b4",
+    "content-hash": "c8734688272d792c2fe323735abb0baf",
     "packages": [
         {
             "name": "jiny/database",
@@ -50,6 +50,51 @@
                 "jinyphp"
             ],
             "time": "2019-04-09T13:41:14+00:00"
+        },
+        {
+            "name": "jiny/html",
+            "version": "0.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jinyphp/html.git",
+                "reference": "bfac14540ed39b5efff25a71cc0462fe99492ae0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jinyphp/html/zipball/bfac14540ed39b5efff25a71cc0462fe99492ae0",
+                "reference": "bfac14540ed39b5efff25a71cc0462fe99492ae0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jiny\\Html\\": "src/"
+                },
+                "files": [
+                    "src/Helpers/Helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "hojinlee",
+                    "email": "infohojin@gmail.com",
+                    "homepage": "http://www.jinyphp.com"
+                }
+            ],
+            "description": "jinyPHP HTML",
+            "homepage": "http://www.jinyphp.com",
+            "keywords": [
+                "framwork",
+                "jinyphp"
+            ],
+            "time": "2019-04-09T12:07:00+00:00"
         }
     ],
     "packages-dev": [],

@@ -23,13 +23,20 @@ list($req, $res) = http_init();
 /**
  * 데이터베이스 접속
  */
-if ($dbo = \Jiny\Database\db_init("../dbconf.php")) {
+$dbconf = \Jiny\Database\db_conf("../dbconf.php");
+if ($dbo = \Jiny\Database\db_init($dbconf)) {
     echo "DB 접속 성공";
 }
 
 
+// Http 로그
+$HttpLog = new \Core\Http\Log($req);
+$HttpLog->log2db($dbo);
+
 if ($req->isTypeJson()) {
     echo "json 처리동작";
+
+    echo $req->getBody();
 
     
 } else {

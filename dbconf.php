@@ -3,7 +3,7 @@
  * 데이터베이스 접속정보
  */
 return [
-    'dbname' => "localhost",
+    'dbname' => "apitest",
     'dbuser' => "apitest",
     'dbpass' => "123456"
 ];
