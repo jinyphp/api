@@ -1,7 +1,7 @@
 {
     "version":"0.1",
     "endpoint":{
-        "name": "message",
+        "name": "header",
         "controller":"action"
     }
 }

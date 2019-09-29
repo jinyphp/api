@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JinyAPI</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+</head>
+<body>
+    <h1>리스트 출력</h1>
+
+    <span id="datalist"></span>
+    
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $.ajax({
+            contentType: "application/json",
+            url: "/",
+            type: "post",
+        
+            dataType: "json",
+            data: JSON.stringify({ 
+                Name: "jiny", 
+                Credits: "1234",
+                Table:"board7",
+                Fields:[
+                    "regdate",
+                    "title"
+                ]
+            }),
+        
+            beforeSend : function(xhr){
+                // 해더 전송
+                xhr.setRequestHeader("Resource", "Database");
+            },
+
+            success : function(data, status, xhr) { 
+                console.log(data);
+                var datalist = $('#username');
+                for(var i=0; i<data.length; i++)
+                {
+                    console.log(data[i]);
+                    datalist.append(data[i].title.value);
+                }
+                // $('#username').append(data.Name);
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(jqXHR.responseText); 
+            }
+        });
+
+
+    </script>
+</body>
+</html>

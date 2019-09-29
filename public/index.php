@@ -41,7 +41,7 @@ if ($req->isTypeJson()) {
 } else {
     // Application 동작
     // text/html
-    new \App\Application($req, $res);
+    new \Core\App\Application($req, $res);
 }
 
 $res->send();

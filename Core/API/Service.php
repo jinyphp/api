@@ -51,9 +51,9 @@ class Service
 
     public function scriptType($name)
     {
-        if($this->Request->headers['Script']) {
+        if(isset($this->Request->headers['Script'])) {
             return $this->Request->headers['Script'];
-        } else if($this->request_body->script) {
+        } else if(isset($this->request_body->script)) {
             return $this->request_body->script;
         } else if ($script = $this->isEndpointJson($name)) {
             return $script->script;
@@ -96,7 +96,7 @@ class Service
      */
     public function controllerNode($name)
     {
-        echo "node를 실행합니다.";
+        // echo "node를 실행합니다.";
         $filename = "..".$name.".js";
         if (file_exists($filename)) {
             exec("node ".$filename, $result);

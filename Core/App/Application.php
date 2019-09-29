@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Core\App;
 // content-type
 // Teext/Html
 class Application
@@ -10,9 +10,13 @@ class Application
     {
         $this->Request = $req;
         $this->Response = $res;
+
+        $controller_name = "\App\Controller\\"."Index";
+        $this->controllerPHP($controller_name);
+
         
         // echo __CLASS__;
-        echo $this->index();
+        // echo $this->index();
         
         // HTML 모드
     /*
@@ -60,19 +64,37 @@ class Application
 
     public function index()
     {
-        $URI = new \Core\Http\URI;
-        if (($uri = $URI->getURI()) == "/") {
-            $filename = "../Resource/View/index.html";
-        } else {
-            $filename = "../Resource/View".$uri.".html";
-        }
 
+    }
+
+    /**
+     * PHP 컨트롤러 처리
+     */
+    public function controllerPHP($name)
+    {
+        $controller = $this->factory($name);
+        
+        $controller->setRequest($this->Request);    // Request 전달
+        $controller->setResponse($this->Response);  // Response 전달
+
+        $method = $this->Request->isMethod();
+        echo $controller->$method();
+    }
+
+    /**
+     * 컨트롤러 생성 팩토리
+     */
+    public function factory($name)
+    {
+        $filename = str_replace("\\",DIRECTORY_SEPARATOR,"..".$name.".php");
+        // echo $filename;
         if(file_exists($filename)) {
-            $body = file_get_contents($filename);
+            return new $name;
         } else {
-            $body = "404 pages";
+            echo "컨트롤러 파일이 존재하지 않습니다.";
+            exit;
         }
-        return $body;
+        
     }
 
     /**
