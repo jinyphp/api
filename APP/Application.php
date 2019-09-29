@@ -13,11 +13,11 @@ class Application
         
         // echo __CLASS__;
         echo $this->index();
+        
         // HTML 모드
     /*
     //echo "nugu play<br>";
     
-
     if (isset($controller) && $controller != "") {
         $controllerName = "\App\Nugu\\".ucfirst($controller);
         $app = new $controllerName;

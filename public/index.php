@@ -36,7 +36,7 @@ $HttpLog->log2db($dbo);
 if ($req->isTypeJson()) {
     // API 동작
     // applicationType/Json
-    new \API\Service($req, $res);
+    new \Core\API\Service($req, $res);
     
 } else {
     // Application 동작
