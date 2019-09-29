@@ -29,6 +29,7 @@ class Service
                 $controllerKey = $this->conf->endpoint->controller;
               
                 $controller_name = "\API\Controller\\". $this->request_body->$controllerKey;
+               
                 break;
             default:
                 echo "endpoint를 찾을 수 없습니다.";
@@ -36,20 +37,29 @@ class Service
 
         }
 
-        echo $controller_name;
-        exit;
-
-        if ($script = $this->isEndpointJson($controller_name)) {
-            switch ($script->script) {
-                case "node":
-                    $this->controllerNode();
-                    break;
-            }
-        } else {
-            // 컨트롤러 호출
-            $this->controllerPHP($controller_name); 
+        // 컨트롤러 호출
+        switch ($this->scriptType($controller_name)) {
+            case "node":
+                $this->controllerNode($controller_name);
+                exit;
+                break;
+            default:
+                $this->controllerPHP($controller_name);
         }
     
+    }
+
+    public function scriptType($name)
+    {
+        if($this->Request->headers['Script']) {
+            return $this->Request->headers['Script'];
+        } else if($this->request_body->script) {
+            return $this->request_body->script;
+        } else if ($script = $this->isEndpointJson($name)) {
+            return $script->script;
+        } else  {
+            return "php";
+        }
     }
 
     public function jsonDecodeFile($filename)
@@ -87,7 +97,15 @@ class Service
     public function controllerNode($name)
     {
         echo "node를 실행합니다.";
-        exit;
+        $filename = "..".$name.".js";
+        if (file_exists($filename)) {
+            exec("node ".$filename, $result);
+            foreach($result as $r) {
+                echo $r;
+            }
+        } else {
+            echo "node 파일이 없습니다.";
+        }
     }
 
     /**
@@ -95,7 +113,9 @@ class Service
      */
     public function factory($name)
     {
-        if(file_exists("..".$name.".php")) {
+        $filename = str_replace("\\",DIRECTORY_SEPARATOR,"..".$name.".php");
+        // echo $filename;
+        if(file_exists($filename)) {
             return new $name;
         } else {
             echo "컨트롤러 파일이 존재하지 않습니다.";
