@@ -24,21 +24,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        $.ajax({
+        
+
+        function jinyapi(body){
+            $.ajax({
             contentType: "application/json",
             url: "/",
             type: "post",
         
             dataType: "json",
-            data: JSON.stringify({ 
-                Name: "jiny", 
-                Credits: "1234",
-                Table:"board7",
-                Fields:[
-                    "regdate",
-                    "title"
-                ]
-            }),
+            data: JSON.stringify(body),
         
             beforeSend : function(xhr){
                 // 해더 전송
@@ -47,40 +42,24 @@
 
             success : function(data, status, xhr) { 
                 console.log(data);
-                var datalist = $('#username');
-                for(var i=0; i<data.length; i++)
-                {
-                    console.log(data[i]);
-                    datalist.append(data[i].title.value);
-                }
-                // $('#username').append(data.Name);
+                return data;
             },
             error: function(jqXHR, textStatus, errorThrown) { 
                 console.log(jqXHR.responseText); 
             }
         });
-
-        function jinyapi(body){
-
         }
 
-        var rows = jinyapi({
-            Action:{
-                Controller:"Board",
-                Method:"list",
+        var rows = jinyapi({ 
+                Name: "jiny", 
+                Credits: "1234",
+                Table:"board7",
                 Fields:[
                     "regdate",
                     "title"
-                    ]
-            },
-            Verb:"select",
-            "database":{
-                Table:"board7",
-                Select:{
-                    
-                }
-            }
-        });
+                ]
+            });
+        console.log(rows);
 
 
 

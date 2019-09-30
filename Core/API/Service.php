@@ -16,6 +16,9 @@ class Service
         $this->Response = $res;
 
         $this->conf = $this->jsonDecodeFile(self::APIDIR."api.json");
+        $controller_name = ( new \Core\Gateway\Endpoint($this->Request) )->detect($this->conf);
+
+        /*
         switch($this->conf->endpoint->name){
             case "header":
                 $controller_name = "\API\Controller\\". $this->Request->headers['Resource'];
@@ -36,9 +39,11 @@ class Service
                 break;
 
         }
+        */
 
         // 컨트롤러 호출
         switch ($this->scriptType($controller_name)) {
+            
             case "node":
                 $this->controllerNode($controller_name);
                 exit;
@@ -53,10 +58,13 @@ class Service
     {
         if(isset($this->Request->headers['Script'])) {
             return $this->Request->headers['Script'];
+
         } else if(isset($this->request_body->script)) {
             return $this->request_body->script;
+
         } else if ($script = $this->isEndpointJson($name)) {
             return $script->script;
+
         } else  {
             return "php";
         }
