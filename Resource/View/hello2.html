@@ -24,41 +24,34 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
-        
-
-        function jinyapi(body){
-            $.ajax({
+        $.ajax({
             contentType: "application/json",
             url: "/",
             type: "post",
         
             dataType: "json",
-            data: JSON.stringify(body),
-        
-            beforeSend : function(xhr){
-                // 해더 전송
-                xhr.setRequestHeader("Resource", "Database");
-            },
-
-            success : function(data, status, xhr) { 
-                console.log(data);
-                return data;
-            },
-            error: function(jqXHR, textStatus, errorThrown) { 
-                console.log(jqXHR.responseText); 
-            }
-        });
-        }
-
-        var rows = jinyapi({ 
+            data: JSON.stringify({ 
+                action: "Database", 
                 Table:"board7",
                 Fields:[
                     "regdate",
                     "title"
                 ]
-            });
-        console.log(rows);
+            }),
+        
+            beforeSend : function(xhr){
+                // 해더 전송
+                // xhr.setRequestHeader("Resource", "Database");
+            },
 
+            success : function(data, status, xhr) { 
+                console.log(data);
+              
+            },
+            error: function(jqXHR, textStatus, errorThrown) { 
+                console.log(jqXHR.responseText); 
+            }
+        });
 
 
     </script>

@@ -16,9 +16,12 @@ class Service
         $this->Response = $res;
 
         $this->conf = $this->jsonDecodeFile(self::APIDIR."api.json");
-        $controller_name = ( new \Core\Gateway\Endpoint($this->Request) )->detect($this->conf);
+        // $controller_name = ( new \Core\Gateway\Endpoint($this->Request) )->detect($this->conf);
 
-        /*
+        // echo $controller_name;
+        // echo $this->Request->getBody();
+        // exit;
+
         switch($this->conf->endpoint->name){
             case "header":
                 $controller_name = "\API\Controller\\". $this->Request->headers['Resource'];
@@ -26,7 +29,7 @@ class Service
             case "uri";
                 $controller_name = "\API\Controller\\". $this->Request->Uri->first();
                 break;
-            case "message";
+            case "Message";
                 $this->request_body = $this->Request->getBody();
                 $this->request_body = json_decode($this->request_body);
                 $controllerKey = $this->conf->endpoint->controller;
@@ -39,7 +42,9 @@ class Service
                 break;
 
         }
-        */
+
+        
+      
 
         // 컨트롤러 호출
         switch ($this->scriptType($controller_name)) {

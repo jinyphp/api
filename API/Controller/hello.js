@@ -8,5 +8,3 @@ console.log({
 for (var i=0;i<5;i++) {
     console.log("hello world<br>");
 }
-
-console.log("강창훈 바보 <br>");

@@ -1,6 +1,7 @@
 {
     "require": {
         "jiny/database": "^0.0.7",
-        "jiny/html": "^0.0.3"
+        "jiny/html": "^0.0.3",
+        "jiny/nugu": "^0.0.1"
     }
 }

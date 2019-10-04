@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c8734688272d792c2fe323735abb0baf",
+    "content-hash": "9492c1d1bf7859ae6616a57492c45790",
     "packages": [
         {
             "name": "jiny/database",
@@ -95,6 +95,53 @@
                 "jinyphp"
             ],
             "time": "2019-04-09T12:07:00+00:00"
+        },
+        {
+            "name": "jiny/nugu",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jinyphp/nugu.git",
+                "reference": "770782f53fd10911b3d10848a7a70cf401f60c25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jinyphp/nugu/zipball/770782f53fd10911b3d10848a7a70cf401f60c25",
+                "reference": "770782f53fd10911b3d10848a7a70cf401f60c25",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jiny\\Petterns\\": "src/"
+                },
+                "files": [
+                    "src/Helpers/Helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "hojinlee",
+                    "email": "infohojin@gmail.com",
+                    "homepage": "http://www.jinyphp.com"
+                }
+            ],
+            "description": "jinyAPI nugu backendProxy",
+            "homepage": "http://www.jinyphp.com",
+            "keywords": [
+                "backendProxy",
+                "framwork",
+                "jinyphp",
+                "nugu"
+            ],
+            "time": "2019-10-04T07:53:19+00:00"
         }
     ],
     "packages-dev": [],
