@@ -1,7 +1,8 @@
 {
     "require": {
-        "jiny/database": "^0.0.7",
+        "jiny/database": "^0.0.8",
         "jiny/html": "^0.0.3",
-        "jiny/nugu": "^0.0.1"
+        "jiny/nugu": "^0.0.3",
+        "jiny/filesystem": "^0.0.1"
     }
 }

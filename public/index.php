@@ -1,10 +1,40 @@
 <?php
-
-//오토로드
+/**
+ * 오토로드
+ */
 const JINYLOAD_FILE = __DIR__.DIRECTORY_SEPARATOR."../loading.php";
 if(file_exists(JINYLOAD_FILE)) {
     require_once JINYLOAD_FILE;
 } else die("cannot load loading files..");
+
+/**
+ * HTTP 접속
+ */
+list($req, $res) = http_init();
+switch($req->contentType()){
+    // application/json 접속처리
+    // API 동작
+    case "application/json":
+        $api = new \Core\API\Service($req, $res);
+        // 기본 api프록시
+        // $api->setProxy()->execute();
+    
+        // nugu_AI proxy
+        $api->setProxy("\Jiny\Nugu\Proxy")->execute();
+        break;
+    default:
+        // 일반동작, text/html
+        new \Core\App\Application($req, $res);
+}
+
+$res->send();
+
+
+
+
+
+
+
 
 
 /**
@@ -18,7 +48,6 @@ function http_init()
     return [$req, $res];
 }
 
-list($req, $res) = http_init();
 
 /**
  * 데이터베이스 접속
@@ -32,16 +61,3 @@ if ($dbo = \Jiny\Database\db_init($dbconf)) {
 // Http 로그
 $HttpLog = new \Core\Http\Log($req);
 $HttpLog->log2db($dbo);
-
-if ($req->isTypeJson()) {
-    // API 동작
-    // applicationType/Json
-    new \Core\API\Service($req, $res);
-    
-} else {
-    // Application 동작
-    // text/html
-    new \Core\App\Application($req, $res);
-}
-
-$res->send();

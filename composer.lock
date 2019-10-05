@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9492c1d1bf7859ae6616a57492c45790",
+    "content-hash": "0ffe2ffdaac63399b96c56f543db1b01",
     "packages": [
         {
             "name": "jiny/database",
@@ -50,6 +50,52 @@
                 "jinyphp"
             ],
             "time": "2019-04-09T13:41:14+00:00"
+        },
+        {
+            "name": "jiny/filesystem",
+            "version": "0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jinyphp/filesystem.git",
+                "reference": "8ae0e434d285fd697ac3f151df3fb9a7f81c6fa6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jinyphp/filesystem/zipball/8ae0e434d285fd697ac3f151df3fb9a7f81c6fa6",
+                "reference": "8ae0e434d285fd697ac3f151df3fb9a7f81c6fa6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">= 7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jiny\\Filesystem\\": "src/"
+                },
+                "files": [
+                    "src/Helpers/Helper.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "hojinlee",
+                    "email": "infohojin@gmail.com",
+                    "homepage": "http://www.jinyphp.com"
+                }
+            ],
+            "description": "jinyPHP filesystem",
+            "homepage": "http://www.jinyphp.com",
+            "keywords": [
+                "filesystem",
+                "framwork",
+                "jinyphp"
+            ],
+            "time": "2018-10-31T11:56:26+00:00"
         },
         {
             "name": "jiny/html",
@@ -98,16 +144,16 @@
         },
         {
             "name": "jiny/nugu",
-            "version": "0.0.1",
+            "version": "0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jinyphp/nugu.git",
-                "reference": "770782f53fd10911b3d10848a7a70cf401f60c25"
+                "reference": "83194f010026781ce0adb102073d1ea8891ab4b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jinyphp/nugu/zipball/770782f53fd10911b3d10848a7a70cf401f60c25",
-                "reference": "770782f53fd10911b3d10848a7a70cf401f60c25",
+                "url": "https://api.github.com/repos/jinyphp/nugu/zipball/83194f010026781ce0adb102073d1ea8891ab4b9",
+                "reference": "83194f010026781ce0adb102073d1ea8891ab4b9",
                 "shasum": ""
             },
             "require": {
@@ -116,7 +162,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Jiny\\Petterns\\": "src/"
+                    "Jiny\\Nugu\\": "src/"
                 },
                 "files": [
                     "src/Helpers/Helper.php"
@@ -141,7 +187,7 @@
                 "jinyphp",
                 "nugu"
             ],
-            "time": "2019-10-04T07:53:19+00:00"
+            "time": "2019-10-04T08:50:19+00:00"
         }
     ],
     "packages-dev": [],

@@ -16,51 +16,43 @@ class Service
         $this->Response = $res;
 
         $this->conf = $this->jsonDecodeFile(self::APIDIR."api.json");
-        // $controller_name = ( new \Core\Gateway\Endpoint($this->Request) )->detect($this->conf);
-
-        // echo $controller_name;
-        // echo $this->Request->getBody();
-        // exit;
-
-        switch($this->conf->endpoint->name){
-            case "header":
-                $controller_name = "\API\Controller\\". $this->Request->headers['Resource'];
-                break;
-            case "uri";
-                $controller_name = "\API\Controller\\". $this->Request->Uri->first();
-                break;
-            case "Message";
-                $this->request_body = $this->Request->getBody();
-                $this->request_body = json_decode($this->request_body);
-                $controllerKey = $this->conf->endpoint->controller;
-              
-                $controller_name = "\API\Controller\\". $this->request_body->$controllerKey;
-               
-                break;
-            default:
-                echo "endpoint를 찾을 수 없습니다.";
-                break;
-
-        }
-
         
-      
+    }
+
+    /**
+     * API Proxy 미들웨어 설정
+     */
+    private $Proxy;
+    public function setProxy($name = "\Core\API\Proxy")
+    {
+        $this->Proxy = new $name ($this->Request, $this->Response);
+        return $this;
+    }
+
+    /**
+     * API 컨트롤러 로직 실행
+     */
+    public function execute()
+    {
+        $controller = $this->Proxy->endPoint($this->conf->endpoint);
 
         // 컨트롤러 호출
-        switch ($this->scriptType($controller_name)) {
-            
+        switch ($this->scriptType($controller)) {
             case "node":
-                $this->controllerNode($controller_name);
+                $this->controllerNode($controller);
                 exit;
                 break;
             default:
-                $this->controllerPHP($controller_name);
+                $this->controllerPHP($controller);
         }
-    
     }
 
-    public function scriptType($name)
+    /**
+     * 실행 스크립트 선택
+     */
+    private function scriptType($name)
     {
+        $name = ucfirst($name);;
         if(isset($this->Request->headers['Script'])) {
             return $this->Request->headers['Script'];
 
@@ -90,19 +82,7 @@ class Service
         }
     }
 
-    /**
-     * PHP 컨트롤러 처리
-     */
-    public function controllerPHP($name)
-    {
-        $controller = $this->factory($name);
-        
-        $controller->setRequest($this->Request);    // Request 전달
-        $controller->setResponse($this->Response);  // Response 전달
 
-        $method = $this->Request->isMethod();
-        echo $controller->$method();
-    }
 
     /**
      * Node 컨트롤러
@@ -122,16 +102,29 @@ class Service
     }
 
     /**
+     * PHP 컨트롤러 처리
+     */
+    public function controllerPHP($name)
+    {
+        $controller = $this->factory($name);
+        $method = $this->Request->isMethod();        
+        echo $controller->$method();
+        // exit;
+    }
+
+    /**
      * 컨트롤러 생성 팩토리
      */
     public function factory($name)
     {
-        $filename = str_replace("\\",DIRECTORY_SEPARATOR,"..".$name.".php");
+        $path = "..";
+        $ext = ".php";
+        $filename = str_replace("\\",DIRECTORY_SEPARATOR, $path.$name.$ext);
         // echo $filename;
         if(file_exists($filename)) {
             return new $name;
         } else {
-            echo "컨트롤러 파일이 존재하지 않습니다.";
+            echo $name." 컨트롤러 파일이 존재하지 않습니다.";
             exit;
         }
         
