@@ -9,6 +9,12 @@ class Index extends \Core\App\Controller
 
     }
 
+    public function index()
+    {
+        // echo __METHOD__;
+        return $this->get();
+    }
+
     const  RESOURCE_PATH = "../Resource/View";
     public function get()
     {

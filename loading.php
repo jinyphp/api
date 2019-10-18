@@ -19,3 +19,6 @@ spl_autoload_register(function($className) {
         exit;
     }
 });
+
+// 글로벌 지니헬퍼
+require_once __DIR__."/Core/Helper.php";

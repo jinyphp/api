@@ -107,6 +107,7 @@ class Service
     public function controllerPHP($name)
     {
         $controller = $this->factory($name);
+        $controller->setProxy($this->Proxy);
         $method = $this->Request->isMethod();        
         echo $controller->$method();
         // exit;

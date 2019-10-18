@@ -10,5 +10,5 @@ RewriteCond %{REQUEST_FILENAME} !-l
 RewriteRule ^ index.php [QSA,L]
 
 # 한글주소
-CheckURL On
-ServerEncoding UTF-8
+#CheckURL On
+#ServerEncoding UTF-8

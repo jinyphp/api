@@ -24,7 +24,7 @@ switch($req->contentType()){
         break;
     default:
         // 일반동작, text/html
-        new \Core\App\Application($req, $res);
+        $app = new \Core\App\Application($req, $res);
 }
 
 $res->send();
@@ -55,9 +55,10 @@ function http_init()
 $dbconf = \Jiny\Database\db_conf("../dbconf.php");
 if ($dbo = \Jiny\Database\db_init($dbconf)) {
     // echo "DB 접속 성공";
+
+    // Http 로그
+    $HttpLog = new \Core\Http\Log($req);
+    $HttpLog->log2db($dbo);
 }
 
 
-// Http 로그
-$HttpLog = new \Core\Http\Log($req);
-$HttpLog->log2db($dbo);
