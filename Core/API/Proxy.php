@@ -7,6 +7,19 @@ class Proxy
     protected $Request, $Response;
     private $bodyjson;
 
+    /**
+     * 싱글턴
+     */
+    private static $Instance;
+    public static function instance()
+    {
+        if (!isset(self::$Instance)) {
+            self::$Instance = new self();
+        }
+
+        return self::$Instance;
+    }
+
     public function __construct($req, $res)
     {
         // echo __CLASS__;

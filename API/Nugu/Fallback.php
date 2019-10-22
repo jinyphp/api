@@ -5,7 +5,7 @@ namespace API\Nugu;
 /**
  * nugu AI backendProxy
  */
-class AnswerFouridiom extends \Jiny\Nugu\Controller
+class Fallback extends \Jiny\Nugu\Controller
 {
     private $dbo;
     const PATH = "..";
@@ -35,9 +35,11 @@ class AnswerFouridiom extends \Jiny\Nugu\Controller
             $query = $builder->where($where)->getQuery();            
 
             if ($row = $builder->run($where)->fetch()) {
-                $nuguRes->setOutput("res_forthidiom", $row['descript']);
+                $res_text = $row['idiom']."의 뜻은 ".$row['descript']." 입니다.";
+                $nuguRes->setOutput("res_idiom",$res_text );
+                $nuguRes->setOutput("ask_forthidiom","");
             } else {
-                $nuguRes->setOutput("res_forthidiom","죄송합니다. ".$idiom." 숙어을 잘 못들었습니다.");
+                $nuguRes->setOutput("res_idiom","죄송합니다. ".$idiom." 숙어을 잘 못들었습니다.");
             }
 
             return json_encode($nuguRes);

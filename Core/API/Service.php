@@ -25,7 +25,11 @@ class Service
     private $Proxy;
     public function setProxy($name = "\Core\API\Proxy")
     {
-        $this->Proxy = new $name ($this->Request, $this->Response);
+        if (is_object($name)) {
+            $this->Proxy = $name;
+        } else {
+            $this->Proxy = new $name ($this->Request, $this->Response);
+        }        
         return $this;
     }
 

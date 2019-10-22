@@ -14,3 +14,32 @@ function version()
 {
     return "0.1";
 }
+
+class TimeLog
+{
+    private static $start;
+    private static $times = [];
+
+    public static function init()
+    {
+        self::$start = self::get_time();
+        // self::$times []= self::$start;
+    }
+
+    public static function check($msg)
+    {
+        // 시간측정
+        $time = self::get_time() - self::$start;
+        self::$times []= [$msg, $time];
+    }
+
+    public static function output()
+    {
+        return var_dump(self::$times);
+    }
+
+    public static function get_time() {
+        list($usec, $sec) = explode(" ", microtime());
+        return ((float)$usec + (float)$sec);
+    }
+}

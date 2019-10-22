@@ -1,4 +1,6 @@
 <?php
+// 글로벌 지니헬퍼
+require_once __DIR__."/Core/Helper.php";
 
 // 컴포저 오토로드
 const AUTOLOAD_FILE = __DIR__."/vendor/autoload.php";
@@ -20,5 +22,4 @@ spl_autoload_register(function($className) {
     }
 });
 
-// 글로벌 지니헬퍼
-require_once __DIR__."/Core/Helper.php";
+

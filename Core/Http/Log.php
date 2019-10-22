@@ -38,7 +38,7 @@ class Log
         ];
 
         $dbo->table(self::LOG)->insert($data)->createAuto()->run($data);
-        // $dbo->table(self::LOG)->insert($data)->createAuto()->run($data);
+        
 
         return $dbo->lastID();
     }

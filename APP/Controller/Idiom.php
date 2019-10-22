@@ -7,10 +7,15 @@ class Idiom extends \Core\App\Controller
     const PATH = "..";
     public function __construct()
     {
+        // 시간측정
+        //\Jiny\TimeLog::check(__METHOD__." ".__LINE__);
+
         $dbconf = \Jiny\Database\db_conf("../dbconf.php");
         if ($this->dbo = \Jiny\Database\db_init($dbconf)) {
             
         }
+
+
     }
     
     /**
@@ -18,63 +23,51 @@ class Idiom extends \Core\App\Controller
      */
     public function index()
     {
-        $listrows = $this->idiom_list();
+        
+        
+        $table = new \Jiny\Html\Table();
+        $table->setThead(['번호','사자숙어','설명']);
+        $table->setClass("table table-hover");
+        
+        $rows = $this->idiom_list();
+        $table->setHref("idiom", "id"); // idiom 필드 선택시 id로 이동처리
+        $table->setTbody($rows);
+
+        $table->setHeader("<a href='/idiom/new' class='btn btn-primary' >추가</a>");
+        $table->setFooter("<a href='/idiom/new' class='btn btn-primary' >추가</a>");
+        $content = $table;
+        
+
+        
+
         $file = "../Resource/View/Idiom/index.htm";
         if (file_exists($file)) {
             $body = file_get_contents($file);
-            $body = str_replace("{{content}}", $listrows, $body);
+            $body = str_replace("{{content}}", $content, $body);
             echo $body;
         }
+
+     
+
     }
 
     private function idiom_list()
     {
-        $content ="
-        <table class=\"table table-hover\">
-    <thead>
-      <tr>
-        <th>번호</th>
-        <th>사자숙어</th>
-        <th>설명</th>
-      </tr>
-    </thead>    
-    ";
-
-        // 목록 출력
+        // 목록 출력        
         $builder = $this->dbo->table("idiom");
+              
+
         $fields = ['id','idiom','descript'];
         $query = $builder->select($fields)->getQuery();
-        // echo $query."\n";
 
         // 자동생성
         $builder->createAuto()->run();
+        
 
         if ($rows = $builder->fetchAll()) {
-            $content .= "<tbody>";
-            foreach ($rows as $row) {
-                $content .= 
-                "<tr>
-                <td>".$row['id']."</td>
-                <td>"."<a href='/idiom/".$row['id']."'>"."".$row['idiom']."</a>". "</td>
-                <td>". $row['descript']."</td>
-                </tr>";
-            }
-            $content .= "</tbody>";
-            $content .= "</table>";
-        } else {
-            $content .= "</table>";
-
-            if (empty($rows)) {
-                $content .= "등록된 데이터가 없습니다.<br>";
-            } else {
-                $content .= "데이터 조회 실폐.<br>";
-            }
-            
-        }
-
-        $content .= "<a href='/idiom/new' class='btn btn-primary' >추가</a>";
-
-        return $content;
+            return $rows;        
+        } 
+        
     }
 
 
@@ -84,28 +77,29 @@ class Idiom extends \Core\App\Controller
      */
     public function new()
     {
+        $form = new \Jiny\Html\Form();
+        $form->setAction("/idiom/newup");
+        $form->setMethod("post");
 
-        $content = "<form action='/idiom/newup' method=post>";
+        $form->setField('idiom',
+            $form->formGroup(
+                $form->label("사자성어", "idiom"),
+                "<input type=\"text\" name='idiom' class=\"form-control\" id=\"idiom\">"
+            )
+        );
 
-        $content .= "
-        <div class=\"form-group\">
-            <label for=\"idiom\">사자성어</label>
-            <input type=\"text\" name='idiom' class=\"form-control\" id=\"idiom\">
-        </div>
+        $form->setField('descript',"<div class=\"form-group\">
+            <label for=\"descript\">설명</label>
+            <textarea name='descript' class=\"form-control\" id=\"descript\"></textarea>
+        </div>");
 
-        <div class=\"form-group\">
-            <label for=\"descriptm\">설명</label>
-            <textarea name='descript' class=\"form-control\" id=\"descript\"> </textarea>
-        </div>
+        $form->setField('submit',"<input type='submit' class=\"btn btn-primary\" value='추가'>");
 
-        <input type='submit' class=\"btn btn-primary\" value='추가'>";
-
-        $content .= "</form>";
 
         $file = "../Resource/View/Idiom/index.htm";
         if (file_exists($file)) {
             $body = file_get_contents($file);
-            $body = str_replace("{{content}}", $content, $body);
+            $body = str_replace("{{content}}", $form, $body);
             echo $body;
         }
 
@@ -123,7 +117,7 @@ class Idiom extends \Core\App\Controller
 
             // 배열 데이터를 작성합니다.
             $data = [
-                'idiom' => "idiom",
+                'idiom' => $_POST['idiom'],
                 'descript' => htmlspecialchars(strip_tags($_POST['descript']))
             ];
 
@@ -171,26 +165,37 @@ class Idiom extends \Core\App\Controller
         // 쿼리 실행
         if($row = $builder->run($where)->fetch()) {
             //print_r($row);
+            /*
+            $form = new \Jiny\Html\Form();
+            $form->setAction("/idiom/modify");
+            $form->setMethod("post");
+
+            $form->setField('idiom', new \Jiny\Html\Field(['type'=>"text", 'name'=>"idiom", 'value'=>$row['idiom'] ]));
+            */
+
+
             $content = "<form action='/idiom/modify' method=post>
                 <input type=hidden name=id value='".$row['id']."'>";
 
-                $content .= "
-                <div class=\"form-group\">
-                    <label for=\"idiom\">사자숙어</label>
-                    <input type=\"text\" name='idiom' value='".$row['idiom']."' class=\"form-control\" id=\"idiom\">
-                </div>
+            $content .= "
+            <div class=\"form-group\">
+                <label for=\"idiom\">사자숙어</label>
+                <input type=\"text\" name='idiom' value='".$row['idiom']."' class=\"form-control\" id=\"idiom\">
+            </div>
 
-                <div class=\"form-group\">
-                    <label for=\"descript\">내용</label>
-                    <textarea name='descript' class=\"form-control\" id=\"descript\"> ". stripslashes($row['descript'])."</textarea>
-                </div>
+            <div class=\"form-group\">
+                <label for=\"descript\">내용</label>
+                <textarea name='descript' class=\"form-control\" id=\"descript\">". stripslashes($row['descript'])."</textarea>
+            </div>
 
-                <input type='submit' class=\"btn btn-primary\" value='수정'>
-                <button type=button onclick=\"location.href='/idiom/delete'\"  class=\"btn btn-danger\">삭제</button>";
+            <input type='submit' class=\"btn btn-primary\" value='수정'>
+            <button type=button onclick=\"location.href='/idiom/delete'\"  class=\"btn btn-danger\">삭제</button>";
 
-                $content .= "</form>";
+            $content .= "</form>";
 
-                $file = "../Resource/View/Idiom/index.htm";
+
+
+            $file = "../Resource/View/Idiom/index.htm";
             if (file_exists($file)) {
                 $body = file_get_contents($file);
                 $body = str_replace("{{content}}", $content, $body);
@@ -238,4 +243,8 @@ class Idiom extends \Core\App\Controller
 
         }
     }
+
+    /**
+     * 
+     */
 }

@@ -7,6 +7,9 @@ if(file_exists(JINYLOAD_FILE)) {
     require_once JINYLOAD_FILE;
 } else die("cannot load loading files..");
 
+// 시간측정
+\Jiny\TimeLog::init();
+
 /**
  * HTTP 접속
  */
@@ -18,18 +21,28 @@ switch($req->contentType()){
         $api = new \Core\API\Service($req, $res);
         // 기본 api프록시
         // $api->setProxy()->execute();
-    
+
         // nugu_AI proxy
         $api->setProxy("\Jiny\Nugu\Proxy")->execute();
+        /*
+        $nugu = \Jiny\Nugu\Proxy::instance();
+        $nugu->setRequest($req);
+        $nugu->setResponse($res);        
+        $api->setProxy($nugu)->execute();
+        */
         break;
     default:
         // 일반동작, text/html
         $app = new \Core\App\Application($req, $res);
+
+
 }
 
 $res->send();
 
-
+// 시간측정
+\Jiny\TimeLog::check("end");
+// echo "<pre>".\Jiny\TimeLog::output()."</pre>";
 
 
 
@@ -57,8 +70,6 @@ if ($dbo = \Jiny\Database\db_init($dbconf)) {
     // echo "DB 접속 성공";
 
     // Http 로그
-    $HttpLog = new \Core\Http\Log($req);
-    $HttpLog->log2db($dbo);
+    // $HttpLog = new \Core\Http\Log($req);
+    // $HttpLog->log2db($dbo);
 }
-
-
