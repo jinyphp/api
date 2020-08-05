@@ -1,8 +1,33 @@
 {
+    "name": "jiny/api",
+    "description": "jinyPHP Api",
+    "keywords": [
+        "jinyPHP",
+        "Api",
+        "framwork"
+    ],
+    "homepage": "https://jiny.dev",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "hojinlee",
+            "email": "infohojin@gmail.com",
+            "homepage": "https://jiny.dev"
+        }
+    ],
+    "minimum-stability": "stable",
     "require": {
-        "jiny/database": "^0.0.8",
-        "jiny/html": "^0.0.3",
-        "jiny/nugu": "^0.0.3",
-        "jiny/filesystem": "^0.0.1"
+        "php": ">= 7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jiny\\API\\": "src/"
+        },
+        "files": [
+            "src/Helpers/Helper.php",
+            "src/Helpers/Jiny.php",
+            "src/Helpers/Api.php"
+        ]        
     }
 }
