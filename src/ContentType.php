@@ -1,5 +1,5 @@
 <?php
-namespace Core\Http;
+namespace Jiny\API;
 
 interface ContentType
 {
