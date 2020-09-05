@@ -15,7 +15,7 @@ class ApplicationJson
     /**
      * 호출시작 진입점
      */
-    public function main()
+    public function main($req, $res)
     {
         // API 처리
         $method = \jiny\http\request()->method();
@@ -115,11 +115,11 @@ class ApplicationJson
             } else {
                 $obj = new $name;
             }
-        } catch (\Exception $e) {
-            echo "오류";
-            echo $e->getMessage();
+        } catch (\Throwable $ex) {
+            echo "API 컨트롤러 ".$name."을 생성할 수 없습니다.";
             exit;
         }
+
         return $obj;
     }
 
